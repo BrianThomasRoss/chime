@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Release Process · GitBook</title>
+        <title>Manual Validation · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="chime-live-cluster.html" />
+    <link rel="next" href="limited-kubeconfigs/limited-kubeconfigs.html" />
     
+    
+    <link rel="prev" href="byok8s.html" />
     
 
     </head>
@@ -217,7 +219,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.4.1" data-path="release-process.html">
+        <li class="chapter " data-level="1.4.1" data-path="release-process.html">
             
                 <a href="release-process.html">
             
@@ -269,7 +271,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="manual-validation.html">
+        <li class="chapter active" data-level="1.4.5" data-path="manual-validation.html">
             
                 <a href="manual-validation.html">
             
@@ -369,7 +371,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Release Process</a>
+        <a href=".." >Manual Validation</a>
     </h1>
 </div>
 
@@ -384,37 +386,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="operations-release-process">Operations: Release Process</h1>
+                                <h1 id="manual-testing-procedure">Manual Testing Procedure</h1>
+<p><a href="https://docs.google.com/document/d/19wl9BHUE5PXYQdSiljIGkWTPfYzHXqlyht8yIpCXukg/edit#" target="_blank">Source</a></p>
 <ol>
-<li>Merge pull requests into <code>develop</code></li>
-<li>Chose a new version number by incrementing the previous release according to <a href="https://semver.org/" target="_blank">semver</a><ul>
-<li>Do not bump the MAJOR version unless the team is ready to create a new <code>releases/v#</code> branch</li>
-</ul>
-</li>
-<li><p>Open a pull request to merge <code>develop</code> into <code>releases/v1</code></p>
-<ul>
-<li><strong>Title</strong>: <code>Release: CHIME v1.#.#</code></li>
-<li><p><strong>Description</strong>: Generate with this command:</p>
-<pre><code class="lang-bash">   git fetch origin
-   git <span class="hljs-built_in">log</span> \
-       --first-parent \
-       --reverse \
-       --pretty=format:<span class="hljs-string">&quot;- %s&quot;</span> \
-       <span class="hljs-string">&quot;origin/releases/v1..origin/develop&quot;</span>
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p>Get release pull request approved by <a href="https://github.com/cjbayesian" target="_blank"><code>@cjbayesian</code></a> or <a href="https://github.com/mdbecker" target="_blank"><code>@mdbecker</code></a></p>
-</li>
-<li>Merge the pull request</li>
-<li><a href="https://github.com/CodeForPhilly/chime/releases/new?target=releases/v1" target="_blank">Create a new release against <code>releases/v1</code></a><ul>
-<li><strong>Tag version:</strong> <code>v1.#.#</code></li>
-<li><strong>Release Title:</strong> <code>CHIME v1.#.#</code></li>
-<li><strong>Description:</strong> Copy release notes from pull request</li>
-</ul>
-</li>
-<li><a href="chime-live-cluster.html">Deploy to the <code>chime-live</code> cluster</a></li>
+<li>Open up the live (production) app at <a href="http://penn-chime.phl.io/" target="_blank">http://penn-chime.phl.io/</a>
+ a. Refresh the page to make sure no inputs are cached</li>
+<li>In a second tab/window run the app locally (e.g. <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a>)</li>
+<li>Verify one by one that each of the inputs in the sidebar have not moved (unless this was an explicit part of the issue being addressed). If the issue changed the input on purpose, make sure the rest of the inputs are in the same order as they were before</li>
+<li>Line up the main frame of the app (the right hand side)</li>
+<li>Go through the live and local version of the app one page at a time, keeping them in line so you can easily see if there are differences.
+ a. Click all the check boxes and carefully inspect that the results are the same
+ b. Look at all graphs and verify that the scale on the y-axis matches and that the scale on the x-axis matches. Verify that the values match
+ c. Look at each of the data tables and verify that the data in the matches
+ d. Pay special attention to the bold numbers at the top of the app and the various numbers in &quot;Show more info about this tool&quot; section near the top</li>
+<li>Change the values for &quot;<a href="../GLOSSARY.html#currently-hospitalized-covid-19-patients" class="glossary-term" title="This variable represents the number of inpatient hospitalizations within the hospital of interest (your hospital).  /&quot;note this is what I&apos;m seeing in the python code&quot; - natehscha / ">Currently Hospitalized COVID-19 Patients</a>&quot;, &quot;Doubling time before social distancing (days)&quot; and &quot;Number of days to project&quot; (slider on the right hand panel) to new values.
+ a. Make sure these values are exactly the same in both the live (production) app and in the local app</li>
+<li>Repeat steps 3-5</li>
 </ol>
 
                                 
@@ -443,8 +430,12 @@
 
             
                 
+                <a href="byok8s.html" class="navigation navigation-prev " aria-label="Previous page: Deploy to Your Own Cluster">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="chime-live-cluster.html" class="navigation navigation-next navigation-unique" aria-label="Next page: The chime-live Cluster">
+                
+                <a href="limited-kubeconfigs/limited-kubeconfigs.html" class="navigation navigation-next " aria-label="Next page: Limited Cluster Access for Deployment">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -455,7 +446,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Release Process","level":"1.4.1","depth":2,"next":{"title":"The chime-live Cluster","level":"1.4.2","depth":2,"path":"operations/chime-live-cluster.md","ref":"./operations/chime-live-cluster.md","articles":[]},"previous":{"title":"Operations","level":"1.4","depth":1,"ref":"","articles":[{"title":"Release Process","level":"1.4.1","depth":2,"path":"operations/release-process.md","ref":"./operations/release-process.md","articles":[]},{"title":"The chime-live Cluster","level":"1.4.2","depth":2,"path":"operations/chime-live-cluster.md","ref":"./operations/chime-live-cluster.md","articles":[]},{"title":"Deploy to Heroku","level":"1.4.3","depth":2,"path":"operations/heroku.md","ref":"./operations/heroku.md","articles":[]},{"title":"Deploy to Your Own Cluster","level":"1.4.4","depth":2,"path":"operations/byok8s.md","ref":"./operations/byok8s.md","articles":[]},{"title":"Manual Validation","level":"1.4.5","depth":2,"path":"operations/manual-validation.md","ref":"./operations/manual-validation.md","articles":[]},{"title":"Limited Cluster Access for Deployment","level":"1.4.6","depth":2,"path":"operations/limited-kubeconfigs/limited-kubeconfigs.md","ref":"./operations/limited-kubeconfigs/limited-kubeconfigs.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mermaid@git+https://github.com/JarvusInnovations/gitbook-plugin-mermaid.git"],"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"operations/release-process.md","mtime":"2020-03-28T19:09:59.105Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-28T19:10:05.645Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Manual Validation","level":"1.4.5","depth":2,"next":{"title":"Limited Cluster Access for Deployment","level":"1.4.6","depth":2,"path":"operations/limited-kubeconfigs/limited-kubeconfigs.md","ref":"./operations/limited-kubeconfigs/limited-kubeconfigs.md","articles":[]},"previous":{"title":"Deploy to Your Own Cluster","level":"1.4.4","depth":2,"path":"operations/byok8s.md","ref":"./operations/byok8s.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mermaid@git+https://github.com/JarvusInnovations/gitbook-plugin-mermaid.git"],"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"operations/manual-validation.md","mtime":"2020-03-28T19:09:59.105Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-28T19:10:05.645Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
