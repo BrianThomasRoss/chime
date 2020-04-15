@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Deploy with Chef Habitat · GitBook</title>
+        <title>Release Process · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="byok8s.html" />
+    <link rel="next" href="release-automation.html" />
     
-    
-    <link rel="prev" href="heroku.html" />
     
 
     </head>
@@ -219,7 +217,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="release-process.html">
+        <li class="chapter active" data-level="1.4.1" data-path="release-process.html">
             
                 <a href="release-process.html">
             
@@ -271,7 +269,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.5" data-path="habitat.html">
+        <li class="chapter " data-level="1.4.5" data-path="habitat.html">
             
                 <a href="habitat.html">
             
@@ -397,7 +395,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Deploy with Chef Habitat</a>
+        <a href=".." >Release Process</a>
     </h1>
 </div>
 
@@ -412,31 +410,24 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="operations-deploy-with-chef-habitat">Operations: Deploy with Chef Habitat</h1>
-<p>CHIME can be quickly deployed to any Linux system with <a href="https://habitat.sh" target="_blank">Chef Habitat</a>:</p>
-<pre><code class="lang-bash">hab svc load codeforphilly/chime
-</code></pre>
-<p>This will download the latest CHIME build from <a href="bldr.habitat.sh">bldr.habitat.sh</a> and start it as a service, serving the interface on the default port of <a href="http://localhost:8000" target="_blank"><code>8000</code></a></p>
-<h2 id="enable-https-access">Enable HTTPS access</h2>
-<p>Providing HTTPS access can be easily done by making use of <a href="https://caddyserver.com/" target="_blank">Caddy</a> and its built-in automatic HTTPS.</p>
-<p>First, start the <code>jarvus/caddy-proxy</code> service with your CHIME service instance bound to the <code>backend</code> slot:</p>
-<pre><code class="lang-bash">hab svc load jarvus/caddy-proxy --bind backend:chime.default
-</code></pre>
-<p>This will open an HTTP interface on port <code>80</code> that proxies to the CHIME service on port <code>8000</code>.</p>
-<p>To enable the HTTPS interface, configure an email address and at least one publicly-resolvable hostname so that Caddy can use <a href="https://letsencrypt.org/" target="_blank">Let&apos;s Encrypt</a> to automatically obtain a free SSL certificate:</p>
-<pre><code class="lang-bash">mkdir -p /hab/user/caddy-proxy/config
-
-<span class="hljs-comment"># use the editor of your choice:</span>
-vim /hab/user/caddy-proxy/config/user.toml
-</code></pre>
-<pre><code class="lang-toml">hostnames = [
-    &quot;mydomain.org&quot;
-]
-
-[tls]
-email = &quot;hello@example.org&quot;
-</code></pre>
-<p>After you save <code>user.toml</code>, the Habitat supervisor will automatically detect the change and apply it. CHIME should now be available via HTTPS, with the HTTP port automatically redirecting.</p>
+                                <h1 id="operations-release-process">Operations: Release Process</h1>
+<h2 id="full-release">Full release</h2>
+<ol>
+<li><a href="https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release" target="_blank">Create a GitHub release</a><ul>
+<li>Must be a full release, i.e., not tagged as a pre-release</li>
+</ul>
+</li>
+<li>Wait for CI to open a Pull Request titled &quot;Deploy CHIME vX.X.X&quot;</li>
+<li>Have a release manager approve &amp; merge the PR</li>
+</ol>
+<h2 id="release-candidate">Release Candidate</h2>
+<ol>
+<li><a href="https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release" target="_blank">Create a GitHub release</a><ul>
+<li>Must be marked as a pre-release</li>
+</ul>
+</li>
+<li>Wait for CI to build/deploy to pre-production environment</li>
+</ol>
 
                                 
                                 </section>
@@ -464,12 +455,8 @@ email = &quot;hello@example.org&quot;
 
             
                 
-                <a href="heroku.html" class="navigation navigation-prev " aria-label="Previous page: Deploy to Heroku">
-                    <i class="fa fa-angle-left"></i>
-                </a>
                 
-                
-                <a href="byok8s.html" class="navigation navigation-next " aria-label="Next page: Deploy to Your Own Cluster">
+                <a href="release-automation.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Release Automation">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -480,7 +467,7 @@ email = &quot;hello@example.org&quot;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deploy with Chef Habitat","level":"1.4.5","depth":2,"next":{"title":"Deploy to Your Own Cluster","level":"1.4.6","depth":2,"path":"operations/byok8s.md","ref":"./operations/byok8s.md","articles":[]},"previous":{"title":"Deploy to Heroku","level":"1.4.4","depth":2,"path":"operations/heroku.md","ref":"./operations/heroku.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mermaid@git+https://github.com/JarvusInnovations/gitbook-plugin-mermaid.git"],"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"operations/habitat.md","mtime":"2020-04-15T17:33:04.526Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T17:33:13.007Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Release Process","level":"1.4.1","depth":2,"next":{"title":"Release Automation","level":"1.4.2","depth":2,"path":"operations/release-automation.md","ref":"./operations/release-automation.md","articles":[]},"previous":{"title":"Operations","level":"1.4","depth":1,"ref":"","articles":[{"title":"Release Process","level":"1.4.1","depth":2,"path":"operations/release-process.md","ref":"./operations/release-process.md","articles":[]},{"title":"Release Automation","level":"1.4.2","depth":2,"path":"operations/release-automation.md","ref":"./operations/release-automation.md","articles":[]},{"title":"The chime-live Cluster","level":"1.4.3","depth":2,"path":"operations/chime-live-cluster.md","ref":"./operations/chime-live-cluster.md","articles":[]},{"title":"Deploy to Heroku","level":"1.4.4","depth":2,"path":"operations/heroku.md","ref":"./operations/heroku.md","articles":[]},{"title":"Deploy with Chef Habitat","level":"1.4.5","depth":2,"path":"operations/habitat.md","ref":"./operations/habitat.md","articles":[]},{"title":"Deploy to Your Own Cluster","level":"1.4.6","depth":2,"path":"operations/byok8s.md","ref":"./operations/byok8s.md","articles":[]},{"title":"Manual Validation","level":"1.4.7","depth":2,"path":"operations/manual-validation.md","ref":"./operations/manual-validation.md","articles":[]},{"title":"Limited Cluster Access for Deployment","level":"1.4.8","depth":2,"path":"operations/limited-kubeconfigs/limited-kubeconfigs.md","ref":"./operations/limited-kubeconfigs/limited-kubeconfigs.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mermaid@git+https://github.com/JarvusInnovations/gitbook-plugin-mermaid.git"],"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"operations/release-process.md","mtime":"2020-04-15T17:33:04.530Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T17:33:13.007Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
