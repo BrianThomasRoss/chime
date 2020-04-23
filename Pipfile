@@ -16,6 +16,7 @@ dash = "*"
 dash-bootstrap-components = "*"
 gunicorn = "*"
 PyYAML = "*"
+twine = "*"
 
 [requires]
 python_version = "3.7"
