@@ -18,6 +18,10 @@ __pycache__/
 # pytest
 .cache/
 
+# pypi
+build/
+dist/
+
 # Module trash
 *.egg-info
 
