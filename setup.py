@@ -3,7 +3,7 @@
 
 from setuptools import find_packages, setup
 
-VERSION = "1.1.3"  # update VERSION in constants.py
+VERSION = "0.0.1"  # update VERSION in constants.py
 AUTHOR = "Predictive Healthcare @ Penn Medicine"
 MAINTAINER = "Brian Ross, Code for Philly"
 MAINTAINER_EMAIL = "ml@brianthomasross.com"
@@ -23,8 +23,8 @@ REQUIREMENTS = [
             "gspread",
             "oauth2client"
 ]
-with open("README.rst") as rm:
-    README = rm.read()
+with open("README.rst", "r") as f:
+    README = f.read()
 CLASSIFIERS = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -48,7 +48,7 @@ setup(
     ],
     test_suite='tests',
 
-    python_requires='>=3.7',
+    python_requires='>=3.6.9',
     entry_points={
         'console_scripts': ['penn_chime=penn_chime.cli:main'],
     },
