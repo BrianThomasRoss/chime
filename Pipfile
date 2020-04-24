@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+twine = "*"
+
+[packages]
+
+altair = "*"
+gspread = "*"
+numpy = "*"
+pandas = "*"
+pytest = "*"
+streamlit = "*"
+oauth2client = "*"
+
+[requires]
+python_version = "3.7"
