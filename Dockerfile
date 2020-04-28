@@ -14,7 +14,9 @@ COPY src src
 COPY st_app.py st_app.py
 
 RUN pip install -q . \
-    && 
+    && echo `export STREAMLIT_SERVER_PORT="$PORT"` >> ~/.bashrc
 
-CMD ["CMD STREAMLIT_SERVER_PORT=$PORT streamlit run st_app.py"]
+
+CMD ["/bin/bash" "-c"]
+ENTRYPOINT [ "streamlit run st_app.py" ]
 
