@@ -17,6 +17,6 @@ RUN pip install -q . \
     && echo `export STREAMLIT_SERVER_PORT="$PORT"` >> ~/.bashrc
 
 
-CMD ["/bin/bash" "-c"]
+CMD ["/bin/bash"]
 ENTRYPOINT [ "streamlit run st_app.py" ]
 
