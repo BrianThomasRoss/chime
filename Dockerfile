@@ -1,6 +1,7 @@
 FROM python:3.7.7-slim-buster
 
 ENV PARAMETERS=./defaults/webapp.cfg
+ENV STREAMLIT_SERVER_PORT=$PORT
 
 WORKDIR /app
 
@@ -13,10 +14,8 @@ COPY defaults defaults
 COPY src src
 COPY st_app.py st_app.py
 
-RUN pip install -q . \
-    && echo `export STREAMLIT_SERVER_PORT="$PORT"` >> ~/.bashrc
+RUN pip install -q .
 
 
-CMD ["/bin/bash"]
-ENTRYPOINT [ "streamlit run st_app.py" ]
+CMD STREAMLIT_SERVER_PORT=$PORT streamlit run st_app.py
 
